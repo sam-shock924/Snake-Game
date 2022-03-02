@@ -30,7 +30,6 @@ function moveSnake() {
     canvasContext.clearRect(0, 0, canvas.width, canvas.height);
     canvasContext.fillStyle = 'black';
     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
-    drawSnake();
     window.addEventListener('keydown', function (e) {
         switch (e.code) {
             case 'ArrowUp':
@@ -48,18 +47,20 @@ function moveSnake() {
             case 'ArrowRight':
                 console.log('ArrowRight')
                 snakePositionX += 1;
-        }
-    })
-    // snakePositionX += 10;
-    // snakePositionX += 10;    
-}
-
-
-
-
-
-
-
+                break;
+            }
+        })
+        // snakePositionX += 10;
+        // snakePositionX += 10;    
+        drawSnake();
+    }
+                
+                
+                
+                
+                
+                
+                
 setInterval(moveSnake, 500);
 
 
