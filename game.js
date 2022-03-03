@@ -50,10 +50,10 @@ function moveSnake() {
                 break;
             }
         })
-        // snakePositionX += 10;
-        // snakePositionX += 10;    
-        drawSnake();
-    }
+    // snakePositionX += 10;    
+    // snakePositionX += 10;
+    drawSnake();
+}
                 
                 
                 
