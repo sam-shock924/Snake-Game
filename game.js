@@ -1,14 +1,20 @@
 let canvas = document.getElementById('snake-game-canvas');
+let score = document.getElementById('game-score')
 let canvasContext;
+let fps = 30;
 let snakePositionX = 100;
 let snakePositionY = 300;
-// let framesPerSecond = 30;
+let applePositionX = Math.floor(Math.random() * (canvas.width - 20));
+let applePositionY = Math.floor(Math.random() * (canvas.height - 20));
 let snakeDirection = undefined;
+let snakeSizeX = 20;
+let snakeSizeY = 20;
 
 window.onload = () => {
     console.log('hello');
     drawCanvas();
     drawSnake();
+    drawApple();
     window.addEventListener('keydown', function (e) {
         switch (e.key) {
             case 'ArrowUp':
@@ -50,39 +56,42 @@ function drawSnake() {
     console.log('snakeDraw')
     canvasContext.beginPath();
     canvasContext.fillStyle = 'green';
-    canvasContext.fillRect(snakePositionX, snakePositionY, 20, 20);
+    canvasContext.fillRect(snakePositionX, snakePositionY, snakeSizeX, snakeSizeY);
     canvasContext.fill();
     canvasContext.closePath();
+}
+
+function drawApple() {
+    canvasContext.fillStyle = 'red';
+    canvasContext.fillRect(applePositionX, applePositionY, 20, 20);
 }
 
 function moveSnake() {
     canvasContext.clearRect(0, 0, canvas.width, canvas.height);
     canvasContext.fillStyle = 'black';
     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+    drawApple();
     drawSnake();
     if (snakeDirection === "up") {
-        snakePositionY -= 10;
+        snakePositionY -= 5;
     } 
 
     if (snakeDirection === "down") {
-        snakePositionY += 10;
+        snakePositionY += 5;
     }
 
     if (snakeDirection === "left") {
-        snakePositionX -= 10;
+        snakePositionX -= 5;
     }
 
     if (snakeDirection === "right") {
-        snakePositionX += 10;
+        snakePositionX += 5;
     }
 }
 
-setInterval(moveSnake, 250);
+//snake collision
+if (snakePositionX == canvas.width) {
+    console.log('snake collision detected')
+} 
 
-
-
-/* ------ NOTES ------
-
-
-
------- END OF NOTES -------- */
+setInterval(moveSnake, 2500/fps);
