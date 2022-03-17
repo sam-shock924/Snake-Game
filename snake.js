@@ -7,8 +7,6 @@ let snakePositionY = 300;
 let applePositionX = Math.floor(Math.random() * (canvas.width - 20));
 let applePositionY = Math.floor(Math.random() * (canvas.height - 20));
 let snakeDirection = undefined;
-let snakeSizeX = 20;
-let snakeSizeY = 20;
 
 window.onload = () => {
     console.log('hello');
@@ -52,11 +50,17 @@ function drawCanvas() {
     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
 }
 
+let snake = {
+    body: [{ x: snakePositionX, y: snakePositionY },
+    { x: snakePositionX - 10, y: snakePositionY },
+    { x: snakePositionX - 20, y: snakePositionY }]
+};
+
 function drawSnake() {
     console.log('snakeDraw')
     canvasContext.beginPath();
     canvasContext.fillStyle = 'green';
-    canvasContext.fillRect(snakePositionX, snakePositionY, snakeSizeX, snakeSizeY);
+    canvasContext.fillRect(snakePositionX, snakePositionY, 20, 20);
     canvasContext.fill();
     canvasContext.closePath();
 }
@@ -88,11 +92,3 @@ function moveSnake() {
         snakePositionX += 5;
     }
 }
-
-//snake collision with apple
-// if (snakeDirection === "up" && snakePositionX || snakePositionY === applePositionX || applePositionY) {
-//     snakeSizeY += 10;
-// } 
-
-
-setInterval(moveSnake, 500);
