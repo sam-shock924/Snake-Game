@@ -2,13 +2,39 @@ let canvas = document.getElementById('snake-game-canvas');
 let score = document.getElementById('game-score')
 let canvasContext;
 // let fps = 30;
-let snakePositionX = 100;
-let snakePositionY = 300;
+// let snakePositionX = 100;
+// let snakePositionY = 300;
 let applePositionX = Math.floor(Math.random() * (canvas.width - 20));
 let applePositionY = Math.floor(Math.random() * (canvas.height - 20));
 let snakeDirection = undefined;
 let snakeSizeX = 20;
 let snakeSizeY = 20;
+
+
+
+const snakeBody = [
+    { xCoord: 100, yCoord: 300 },
+    { xCoord: 90, yCoord: 300 },
+    { xCoord: 80, yCoord: 300 }
+];
+
+
+function drawSnake() {
+    console.log('snakeDraw')
+    canvasContext.beginPath();
+    canvasContext.fillStyle = 'green';
+    canvasContext.fillRect(snakeBody[0], snakeBody[1], snakeSizeX, snakeSizeY);
+    canvasContext.fill();
+    canvasContext.closePath();
+}
+
+
+function drawCanvas() {
+    console.log('canvasDraw');
+    canvasContext = canvas.getContext('2d');
+    canvasContext.fillStyle = 'black';
+    canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+}
 
 window.onload = () => {
     console.log('hello');
@@ -45,21 +71,14 @@ window.onload = () => {
     })
 }
 
-function drawCanvas() {
-    console.log('canvasDraw');
-    canvasContext = canvas.getContext('2d');
-    canvasContext.fillStyle = 'black';
-    canvasContext.fillRect(0, 0, canvas.width, canvas.height);
-}
+// const snakeBody = [
+//     { x: 100, y: 300 },
+//     { x: 90, y: 300 },
+//     { x: 80, y: 300 }
+// ];
 
-function drawSnake() {
-    console.log('snakeDraw')
-    canvasContext.beginPath();
-    canvasContext.fillStyle = 'green';
-    canvasContext.fillRect(snakePositionX, snakePositionY, snakeSizeX, snakeSizeY);
-    canvasContext.fill();
-    canvasContext.closePath();
-}
+
+
 
 function drawApple() {
     canvasContext.fillStyle = 'red';
@@ -73,19 +92,19 @@ function moveSnake() {
     drawApple();
     drawSnake();
     if (snakeDirection === "up") {
-        snakePositionY -= 5;
+        snakeBody[1] -= 5;
     } 
 
     if (snakeDirection === "down") {
-        snakePositionY += 5;
+        snakeBody[1] += 5;
     }
 
     if (snakeDirection === "left") {
-        snakePositionX -= 5;
+        snakeBody[0] -= 5;
     }
 
     if (snakeDirection === "right") {
-        snakePositionX += 5;
+        snakeBody[0] += 5;
     }
 }
 
@@ -94,5 +113,7 @@ function moveSnake() {
 //     snakeSizeY += 10;
 // } 
 
+
+//snake.body
 
 setInterval(moveSnake, 500);

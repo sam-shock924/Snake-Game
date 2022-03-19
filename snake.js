@@ -50,11 +50,27 @@ function drawCanvas() {
     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-let snake = {
-    body: [{ x: snakePositionX, y: snakePositionY },
-    { x: snakePositionX - 10, y: snakePositionY },
-    { x: snakePositionX - 20, y: snakePositionY }]
-};
+// const newSnakeDataStructure = [Obj1];
+
+// const Obj1 = { xCord: 0, yCord: 0 };
+
+// function drawSnake(newSnakeDataStructure) {
+//   newSnakeDataStructure.forEach((snakePart) => {
+//     drawSnake(snakePart);
+//   });
+// }
+
+// const alternateSnakeDataStructure = [altObj1];
+
+// const altObj1 = [0, 0];
+
+
+
+// let snake = {
+//     body: [{ x: snakePositionX, y: snakePositionY },
+//     { x: snakePositionX - 10, y: snakePositionY },
+//     { x: snakePositionX - 20, y: snakePositionY }]
+// };
 
 function drawSnake() {
     console.log('snakeDraw')
@@ -92,3 +108,11 @@ function moveSnake() {
         snakePositionX += 5;
     }
 }
+
+
+/*
+
+newSnake.forEach((snakePart)) => {drawSnake(snakePart)});
+
+
+*/
