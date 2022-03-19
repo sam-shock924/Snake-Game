@@ -10,24 +10,20 @@ let snakeDirection = undefined;
 let snakeSizeX = 20;
 let snakeSizeY = 20;
 
-
-
 const snakeBody = [
     { xCoord: 100, yCoord: 300 },
     { xCoord: 90, yCoord: 300 },
     { xCoord: 80, yCoord: 300 }
 ];
 
-
-function drawSnake() {
+function drawSnake(snakeBody) {
     console.log('snakeDraw')
     canvasContext.beginPath();
     canvasContext.fillStyle = 'green';
-    canvasContext.fillRect(snakeBody[0], snakeBody[1], snakeSizeX, snakeSizeY);
+    canvasContext.fillRect(snakeBody.xCoord, snakeBody.yCoord, snakeSizeX, snakeSizeY);
     canvasContext.fill();
     canvasContext.closePath();
 }
-
 
 function drawCanvas() {
     console.log('canvasDraw');
@@ -71,15 +67,6 @@ window.onload = () => {
     })
 }
 
-// const snakeBody = [
-//     { x: 100, y: 300 },
-//     { x: 90, y: 300 },
-//     { x: 80, y: 300 }
-// ];
-
-
-
-
 function drawApple() {
     canvasContext.fillStyle = 'red';
     canvasContext.fillRect(applePositionX, applePositionY, 20, 20);
@@ -107,13 +94,5 @@ function moveSnake() {
         snakeBody[0] += 5;
     }
 }
-
-//snake collision with apple
-// if (snakeDirection === "up" && snakePositionX || snakePositionY === applePositionX || applePositionY) {
-//     snakeSizeY += 10;
-// } 
-
-
-//snake.body
 
 setInterval(moveSnake, 500);
