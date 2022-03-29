@@ -20,24 +20,21 @@ function drawCanvas() {
 }
 
 function drawSnake(xCoord, yCoord) {
-    console.log('snakeDraw')
-    // canvasContext.beginPath();
+    // console.log('snakeDraw')
     canvasContext.fillStyle = 'green';
     canvasContext.fillRect(xCoord, yCoord, snakeSizeX, snakeSizeY);
-    // canvasContext.fill();
-    // canvasContext.closePath();
 }
-
-snakeBody.forEach(snakePart => {
-    drawSnake(snakePart.xCoord, snakePart.yCoord)
-    console.log(snakePart);
-})
 
 window.onload = () => {
     console.log('hello');
     drawCanvas();
     drawSnake(snakeBody[0].xCoord, snakeBody[0].yCoord);
     drawApple();
+    snakeBody.forEach(snakePart => {
+        drawSnake(snakePart.xCoord, snakePart.yCoord)
+        console.log(snakePart);
+    })
+
     window.addEventListener('keydown', function (e) {
         switch (e.key) {
             case 'ArrowUp':
@@ -79,6 +76,10 @@ function moveSnake() {
     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
     drawApple();
     drawSnake(snakeBody[0].xCoord, snakeBody[0].yCoord);
+    snakeBody.forEach(snakePart => {
+        drawSnake(snakePart.xCoord, snakePart.yCoord)
+    })
+
     if (snakeDirection === "up") {
         snakeBody[1] -= 5;
     } 
