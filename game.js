@@ -1,6 +1,5 @@
 let canvas = document.getElementById('snake-game-canvas');
 let score = document.getElementById('game-score')
-// let canvasContext;
 let canvasContext = canvas.getContext('2d');
 let applePositionX = Math.floor(Math.random() * (canvas.width - 20));
 let applePositionY = Math.floor(Math.random() * (canvas.height - 20));
@@ -70,7 +69,6 @@ window.onload = () => {
 }
 
 function drawApple() {
-    // console.log('appleDraw');
     canvasContext.fillStyle = 'red';
     canvasContext.fillRect(applePositionX, applePositionY, 20, 20);
 }
