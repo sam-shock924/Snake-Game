@@ -1,5 +1,5 @@
 let canvas = document.getElementById('snake-game-canvas');
-let score = document.getElementById('game-score')
+let score = document.getElementById('game-score');
 let canvasContext = canvas.getContext('2d');
 let applePositionX = Math.floor(Math.random() * (canvas.width - 20));
 let applePositionY = Math.floor(Math.random() * (canvas.height - 20));
@@ -17,6 +17,20 @@ const snakeBody = [
     { xCoord: 50, yCoord: 300 }
 ];
 
+
+function endGame() {
+    // debugger;
+    // let restartButton = document.createElement('button');
+    // debugger;
+    // restartButton.setAttribute('id', 'restart-button');
+    // debugger;
+    // restartButton.addEventListener('click', () => {
+    //     location.reload();
+    // })
+    // debugger;
+    alert('Game Over!');
+}
+
 function drawCanvas() {
     console.log('canvasDraw');
     canvasContext.fillStyle = 'black';
@@ -27,8 +41,6 @@ function drawSnake(xCoord, yCoord) {
     canvasContext.fillStyle = 'green';
     canvasContext.fillRect(xCoord, yCoord, snakeSizeX, snakeSizeY);
 }
-
-
 
 window.onload = () => {
     console.log('hello');
@@ -102,6 +114,35 @@ function moveSnake() {
     for (i = 1; i < snakeBody.length; i++) {
         snakeBody[i] = snakeBodyCopy[i - 1];
     }
+    checkCollision();
 }
 
-setInterval(moveSnake, 500);
+function checkCollision(xCoord, yCoord) {
+    if (snakeBody[0].xCoord >= canvas.width || snakeBody[0].xCoord <= -15) {
+        endGame();
+    }
+    if (snakeBody[0].yCoord >= canvas.height || snakeBody[0].yCoord <= -15) {
+        endGame();
+    }
+}
+
+
+
+// if (snakeBody[0].xCoord === applePositionX && snakeBody[0].yCoord === applePositionY) {
+//     snakeBody.push({ xCoord: snakeBody[snakeBody.length + 1].xCoord, yCoord: snakeBody[snakeBody.length + 1].yCoord });
+//     drawApple();
+//     score.textContent++;
+// }
+
+setInterval(moveSnake, 100);
+
+/* My next step is to create boundary detection with the snake head and the canvas. 
+I will need to create a function that will check if the snake head is touching the canvas.
+If it is touching the canvas, the snake will die.
+Let's try to create a function that will check if the snake head is touching the snake body.
+If it is touching the snake body, the snake will die.
+Not sure if doing something like 
+if (snakeBody[0].xCoord === snakeBody[i].xCoord && snakeBody[0].yCoord === snakeBody[i].yCoord)
+return {snakeDirection = null} and endGame()
+will work.
+*/
