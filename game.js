@@ -33,6 +33,7 @@ function endGame() {
 function drawCanvas() {
     canvasContext.fillStyle = 'black';
     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+    drawApple();
 }
 
 function drawSnake(xCoord, yCoord) {
@@ -79,10 +80,22 @@ function drawApple() {
     canvasContext.fillRect(applePositionX, applePositionY, 20, 20);
 }
 
+// function newAppleLocation() {
+//     // let applePositionX = null;
+//     // let applePositionY = null;
+//     let newApplePositionX = (Math.floor(Math.random() * ((canvas.width - 20)) / 10)) * 10;
+//     let newApplePositionY = (Math.floor(Math.random() * ((canvas.height - 20)) / 10)) * 10;
+//     canvasContext.fillRect(applePositionX, applePositionY, 20, 20);
+//     canvasContext.fillStyle = 'red';
+//     canvasContext.fillRect(newApplePositionX, newApplePositionY, 20, 20);
+// }
+
 function resetCanvas() {
     canvasContext.clearRect(0, 0, canvas.width, canvas.height);
     canvasContext.fillStyle = 'black';
     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+    // drawApple();
+    // drawSnake();
 }
 
 function moveSnake() {
@@ -112,8 +125,6 @@ function moveSnake() {
         snakeBody[i] = snakeBodyCopy[i - 1];
     }
     checkCollision();
-    // console.log(snakeBody[0].xCoord, snakeBody[0].yCoord);
-    // console.log(applePositionX, applePositionY);
 }
 
 function checkCollision(xCoord, yCoord) {
@@ -130,14 +141,21 @@ function addBodyPart() {
     if (snakeBody[0].xCoord === applePositionX && snakeBody[0].yCoord === applePositionY) {
         snakeBody.push({ xCoord: snakeBody[snakeBody.length - 1].xCoord, yCoord: snakeBody[snakeBody.length - 1].yCoord });
     }
+    console.table(snakeBody);
 }
 
 function newApple() {
     if (snakeBody[0].xCoord === applePositionX && snakeBody[0].yCoord === applePositionY) {
         console.log("Apple eaten");
+        // debugger;
         resetCanvas();
+        // moveSnake();
+        // debugger;
         canvasContext.clearRect(applePositionX, applePositionY, 20, 20);
+        // debugger;
+        // newAppleLocation();
         drawApple();
+        // debugger;
         addBodyPart();
         updateScore();
     }
