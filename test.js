@@ -2,12 +2,16 @@ let canvas = document.getElementById('snake-game-canvas');
 let scoreDisplay = document.getElementById('game-score');
 let score = 0;
 let canvasContext = canvas.getContext('2d');
-let applePositionX = (Math.floor(Math.random() * ((canvas.width - 20))/10)) * 10;
-let applePositionY = (Math.floor(Math.random() * ((canvas.height - 20))/10)) * 10;
+// let applePositionX = (Math.floor(Math.random() * ((canvas.width - 20))/10)) * 10;
+// let applePositionY = (Math.floor(Math.random() * ((canvas.height - 20))/10)) * 10;
 let snakeDirection = undefined;
 let snakeSpeed = 10;
 let snakeSizeX = 20;
 let snakeSizeY = 20;
+// canvas draw as universal instead of function
+canvasContext.fillStyle = 'black';
+canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+
 
 const snakeBody = [
     { xCoord: 100, yCoord: 300 },
@@ -17,24 +21,19 @@ const snakeBody = [
     { xCoord: 60, yCoord: 300 }
 ];
 
+const applePosition = [
+    { xLocation: (Math.floor(Math.random() * ((canvas.width - 20)) / 10)) * 10, yLocation: (Math.floor(Math.random() * ((canvas.height - 20)) / 10)) * 10 }
+];
+
 function endGame() {
-    // debugger;
-    // let restartButton = document.createElement('button');
-    // debugger;
-    // restartButton.setAttribute('id', 'restart-button');
-    // debugger;
-    // restartButton.addEventListener('click', () => {
-    //     location.reload();
-    // })
-    // debugger;
     alert('Game Over!');
 }
 
-function drawCanvas() {
-    canvasContext.fillStyle = 'black';
-    canvasContext.fillRect(0, 0, canvas.width, canvas.height);
-    drawApple();
-}
+// function drawCanvas() {
+//     canvasContext.fillStyle = 'black';
+//     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+//     drawApple();
+// }
 
 function drawSnake(xCoord, yCoord) {
     canvasContext.fillStyle = 'green';
@@ -42,7 +41,7 @@ function drawSnake(xCoord, yCoord) {
 }
 
 window.onload = () => {
-    drawCanvas();
+    // drawCanvas();
     drawSnake(snakeBody[0].xCoord, snakeBody[0].yCoord);
     drawApple();
     snakeBody.forEach(snakePart => {
@@ -75,9 +74,16 @@ window.addEventListener('keydown', function (e) {
     }
 })
 
-function drawApple() {
+function drawApple(xLocation, yLocation) {
     canvasContext.fillStyle = 'red';
-    canvasContext.fillRect(applePositionX, applePositionY, 20, 20);
+    canvasContext.fillRect(applePosition[0].xLocation, applePosition[0].yLocation, 20, 20);
+}
+
+function newAppleLocation(xLocation, yLocation) {
+    applePosition.pop();
+    console.log('array popped');
+    applePosition.push({ xLocation: (Math.floor(Math.random() * ((canvas.width - 20)) / 10)) * 10, yLocation: (Math.floor(Math.random() * ((canvas.height - 20)) / 10)) * 10 });
+    console.log('array pushed');
 }
 
 // function newAppleLocation() {
@@ -90,16 +96,16 @@ function drawApple() {
 //     canvasContext.fillRect(newApplePositionX, newApplePositionY, 20, 20);
 // }
 
-function resetCanvas() {
-    canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-    canvasContext.fillStyle = 'black';
-    canvasContext.fillRect(0, 0, canvas.width, canvas.height);
-    // drawApple();
-    // drawSnake();
-}
+// function resetCanvas() {
+//     canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+//     canvasContext.fillStyle = 'black';
+//     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+//     // drawApple();
+//     // drawSnake();
+// }
 
 function moveSnake() {
-    resetCanvas();
+    // resetCanvas();
     const snakeBodyCopy = snakeBody.map(snakeParts => Object.assign({}, snakeParts));
     drawApple();
     drawSnake(snakeBody[0].xCoord, snakeBody[0].yCoord);
@@ -138,20 +144,19 @@ function checkCollision(xCoord, yCoord) {
 }
 
 function addBodyPart() {
-    if (snakeBody[0].xCoord === applePositionX && snakeBody[0].yCoord === applePositionY) {
+    if (snakeBody[0].xCoord === applePosition[0].xLocation && snakeBody[0].yCoord === applePosition[0].yLocation) {
         snakeBody.push({ xCoord: snakeBody[snakeBody.length - 1].xCoord, yCoord: snakeBody[snakeBody.length - 1].yCoord });
     }
     console.table(snakeBody);
 }
 
-function newApple() {
-    if (snakeBody[0].xCoord === applePositionX && snakeBody[0].yCoord === applePositionY) {
+function newApple(xLocation, yLocation) {
+    if (snakeBody[0].xCoord === applePosition[0].xLocation && snakeBody[0].yCoord === applePosition[0].yLocation) {
         console.log("Apple eaten");
-        resetCanvas();
         // moveSnake();
-        canvasContext.clearRect(applePositionX, applePositionY, 20, 20);
-        // newAppleLocation();
-        drawApple();
+        // canvasContext.clearRect(applePosition[0].xLocation, applePosition[0].yLocation, 20, 20);
+        // drawApple();
+        newAppleLocation();
         addBodyPart();
         updateScore();
     }
