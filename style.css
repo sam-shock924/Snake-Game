@@ -1,2 +1,9 @@
 body {
+	font-family: "Press Start 2P", cursive;
+	text-align: center;
+	background-color: grey;
+}
+
+#snake-game-canvas {
+	border: 5px dashed white;
 }
