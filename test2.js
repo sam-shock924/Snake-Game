@@ -34,7 +34,6 @@ function runGame() {
     checkAppleCollision();
     checkWallCollision();
     // updateGame();
-    // resetCanvas();
 }
 
 //draw canvas
@@ -91,13 +90,8 @@ window.addEventListener('keydown', function (e) {
     }
 })
 
-
 //snake movement
 function moveSnake() {
-    // snakeBody.forEach(snakePart => {
-    //     drawSnake(snakePart.xCoord, snakePart.yCoord)
-    // })
-    // drawSnake(snakeBody[0].xCoord, snakeBody[0].yCoord);
     const snakeBodyCopy = snakeBody.map(snakeParts => Object.assign({}, snakeParts));
     if (snakeDirection === "up") {
         snakeBody[0].yCoord -= snakeSpeed;
@@ -130,8 +124,8 @@ function checkWallCollision(xCoord, yCoord) {
 }
 
 function updateGame() {
-    newAppleLocation();
     addBodyPart();
+    newAppleLocation();
     updateScore();
     increaseSpeed();
 }
@@ -140,9 +134,9 @@ function updateGame() {
 function checkAppleCollision() {
     if (snakeBody[0].xCoord === applePosition[0].xLocation && snakeBody[0].yCoord === applePosition[0].yLocation) {
         console.log("Apple eaten");
-        newAppleLocation();
-        addBodyPart();
-        // updateGame();
+        // newAppleLocation();
+        // addBodyPart();
+        updateGame();
     }
 }
 
@@ -153,7 +147,6 @@ function increaseSpeed() {
     console.log(snakeSpeed);
 }
 
-
 //add snake body part
 function addBodyPart() {
     if (snakeBody[0].xCoord === applePosition[0].xLocation && snakeBody[0].yCoord === applePosition[0].yLocation) {
@@ -163,7 +156,6 @@ function addBodyPart() {
     console.log('added body part');
 }
 
-
 //new apple location
 function newAppleLocation(xLocation, yLocation) {
     applePosition.pop();
@@ -171,9 +163,6 @@ function newAppleLocation(xLocation, yLocation) {
     applePosition.push({ xLocation: (Math.floor(Math.random() * ((canvas.width - 20)) / 10)) * 10, yLocation: (Math.floor(Math.random() * ((canvas.height - 20)) / 10)) * 10 });
     console.log('array pushed');
 }
-
-//update game state
-
 
 //update score
 function updateScore() {
@@ -186,7 +175,6 @@ function updateScore() {
 function endGame() {
     console.log('Game Over!');
 }
-
 
 console.table(snakeBody);
 console.table(applePosition);
