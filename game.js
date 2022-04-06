@@ -124,10 +124,10 @@ function moveSnake() {
     for (i = 1; i < snakeBody.length; i++) {
         snakeBody[i] = snakeBodyCopy[i - 1];
     }
-    checkCollision();
+    checkWallCollision();
 }
 
-function checkCollision(xCoord, yCoord) {
+function checkWallCollision(xCoord, yCoord) {
     if (snakeBody[0].xCoord >= canvas.width || snakeBody[0].xCoord <= -15) {
         endGame();
     }

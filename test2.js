@@ -1,13 +1,11 @@
 let canvas = document.getElementById('snake-game-canvas');
+let canvasContext = canvas.getContext('2d');
 let scoreDisplay = document.getElementById('game-score');
 let score = 0;
-let canvasContext = canvas.getContext('2d');
 let snakeDirection = undefined;
 let snakeSpeed = 10;
 let snakeSizeX = 20;
 let snakeSizeY = 20;
-// canvasContext.fillStyle = 'black';
-// canvasContext.fillRect(0, 0, canvas.width, canvas.height);
 
 
 //snake array
@@ -27,16 +25,23 @@ const applePosition = [
     }
 ];
 
-//window load
-window.onload = () => {
-    runGame();
+
+//run game
+function runGame() {
+    // resetCanvas();
+    drawCanvas();
+    moveSnake();
+    checkAppleCollision();
+    checkWallCollision();
+    // updateGame();
+    // resetCanvas();
 }
 
 //draw canvas
 function drawCanvas() {
     canvasContext.fillStyle = 'black';
     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
-    drawSnake(snakeBody[0].xCoord, snakeBody[0].yCoord);
+    // drawSnake(snakeBody[0].xCoord, snakeBody[0].yCoord);
     snakeBody.forEach(snakePart => {
         drawSnake(snakePart.xCoord, snakePart.yCoord)
     })
@@ -56,7 +61,9 @@ function drawApple(xLocation, yLocation) {
 }
 
 //reset canvas
-
+function resetCanvas() {
+    canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+}
 
 //keypress event
 window.addEventListener('keydown', function (e) {
@@ -87,9 +94,9 @@ window.addEventListener('keydown', function (e) {
 
 //snake movement
 function moveSnake() {
-    snakeBody.forEach(snakePart => {
-        drawSnake(snakePart.xCoord, snakePart.yCoord)
-    })
+    // snakeBody.forEach(snakePart => {
+    //     drawSnake(snakePart.xCoord, snakePart.yCoord)
+    // })
     // drawSnake(snakeBody[0].xCoord, snakeBody[0].yCoord);
     const snakeBodyCopy = snakeBody.map(snakeParts => Object.assign({}, snakeParts));
     if (snakeDirection === "up") {
@@ -113,7 +120,7 @@ function moveSnake() {
 }
 
 //canvas checkCollision
-function checkCollision(xCoord, yCoord) {
+function checkWallCollision(xCoord, yCoord) {
     if (snakeBody[0].xCoord >= canvas.width || snakeBody[0].xCoord <= -15) {
         endGame();
     }
@@ -122,21 +129,30 @@ function checkCollision(xCoord, yCoord) {
     }
 }
 
+function updateGame() {
+    newAppleLocation();
+    addBodyPart();
+    updateScore();
+    increaseSpeed();
+}
+
 //apple checkCollision
-function checkAppleCollision(xCoord, yCoord) {
+function checkAppleCollision() {
     if (snakeBody[0].xCoord === applePosition[0].xLocation && snakeBody[0].yCoord === applePosition[0].yLocation) {
-        newAppleLocation();
-        return true;
         console.log("Apple eaten");
+        newAppleLocation();
+        addBodyPart();
+        // updateGame();
     }
 }
 
 //increase speed
 function increaseSpeed() {
-    if (checkAppleCollision === true) {
-        snakeSpeed += 2;
-    }
+    snakeSpeed += 2;
+    console.log('speed increased');
+    console.log(snakeSpeed);
 }
+
 
 //add snake body part
 function addBodyPart() {
@@ -144,6 +160,7 @@ function addBodyPart() {
         snakeBody.push({ xCoord: snakeBody[snakeBody.length - 1].xCoord, yCoord: snakeBody[snakeBody.length - 1].yCoord });
     }
     console.table(snakeBody);
+    console.log('added body part');
 }
 
 
@@ -156,38 +173,23 @@ function newAppleLocation(xLocation, yLocation) {
 }
 
 //update game state
-function updateGameState() {
-    if (checkAppleCollision() === true) {
-        addBodyPart();
-        updateScore();
-        increaseSpeed();
-    }
-}
+
 
 //update score
 function updateScore() {
     score++;
     scoreDisplay.innerText = `Score: ${score}`;
+    console.log('updated score');
 }
 
 //end game function
 function endGame() {
-    alert('Game Over!');
+    console.log('Game Over!');
 }
 
-//run game
-function runGame() {
-
-    drawCanvas();
-    moveSnake();
-    // updateScore();
-    // checkAppleCollision();
-    // checkCollision();
-    updateGameState();
-}
 
 console.table(snakeBody);
 console.table(applePosition);
 //start game function
 
-setInterval(moveSnake, 80);
+setInterval(runGame, 100);
