@@ -10,11 +10,11 @@ let snakeSizeY = 20;
 
 //snake array
 const snakeBody = [
-    { xCoord: 100, yCoord: 300 },
-    { xCoord: 90, yCoord: 300 },
-    { xCoord: 80, yCoord: 300 },
-    { xCoord: 70, yCoord: 300 },
-    { xCoord: 60, yCoord: 300 }
+    { xCoord: 100, yCoord: 300 }
+    // { xCoord: 90, yCoord: 300 },
+    // { xCoord: 80, yCoord: 300 },
+    // { xCoord: 70, yCoord: 300 },
+    // { xCoord: 60, yCoord: 300 }
 ];
 
 //apple array
@@ -25,22 +25,23 @@ const applePosition = [
     }
 ];
 
-
 //run game
 function runGame() {
-    // resetCanvas();
+    resetCanvas();
     drawCanvas();
     moveSnake();
     checkAppleCollision();
+    checkSnakeCollision();
     checkWallCollision();
-    // updateGame();
+    // if (endGame() === true) {
+    //     return;
+    // }
 }
 
 //draw canvas
 function drawCanvas() {
     canvasContext.fillStyle = 'black';
     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
-    // drawSnake(snakeBody[0].xCoord, snakeBody[0].yCoord);
     snakeBody.forEach(snakePart => {
         drawSnake(snakePart.xCoord, snakePart.yCoord)
     })
@@ -123,26 +124,33 @@ function checkWallCollision(xCoord, yCoord) {
     }
 }
 
+function checkSnakeCollision() {
+    for (i = 1; i < snakeBody.length; i++) {
+        if (snakeBody[0].xCoord === snakeBody[i].xCoord && snakeBody[0].yCoord === snakeBody[i].yCoord) {
+            endGame();
+        }
+    }
+}
+
+
 function updateGame() {
     addBodyPart();
     newAppleLocation();
     updateScore();
-    increaseSpeed();
+    // increaseSpeed();
 }
 
 //apple checkCollision
 function checkAppleCollision() {
     if (snakeBody[0].xCoord === applePosition[0].xLocation && snakeBody[0].yCoord === applePosition[0].yLocation) {
         console.log("Apple eaten");
-        // newAppleLocation();
-        // addBodyPart();
         updateGame();
     }
 }
 
 //increase speed
 function increaseSpeed() {
-    snakeSpeed += 2;
+    snakeSpeed += .1;
     console.log('speed increased');
     console.log(snakeSpeed);
 }
@@ -157,7 +165,7 @@ function addBodyPart() {
 }
 
 //new apple location
-function newAppleLocation(xLocation, yLocation) {
+function newAppleLocation() {
     applePosition.pop();
     console.log('array popped');
     applePosition.push({ xLocation: (Math.floor(Math.random() * ((canvas.width - 20)) / 10)) * 10, yLocation: (Math.floor(Math.random() * ((canvas.height - 20)) / 10)) * 10 });
@@ -172,7 +180,8 @@ function updateScore() {
 }
 
 //end game function
-function endGame() {
+function endGame() {    
+    // return true;
     console.log('Game Over!');
 }
 
