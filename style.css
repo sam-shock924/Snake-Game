@@ -6,4 +6,5 @@ body {
 
 #snake-game-canvas {
 	border: 5px dashed white;
+	border-radius: 5px;
 }
