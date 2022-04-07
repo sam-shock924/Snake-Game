@@ -1,4 +1,5 @@
 const startButton = document.getElementById('start-game-button');
+const restartButton = document.getElementById('restart-game-button');
 let canvas = document.getElementById('snake-game-canvas');
 let canvasContext = canvas.getContext('2d');
 let scoreDisplay = document.getElementById('game-score');
@@ -30,7 +31,13 @@ startButton.addEventListener('click', () => {
     gameInterval = setInterval(runGame, 100);
 });
 
+restartButton.addEventListener('click', () => {
+    document.location.reload(true);
+});
+
+
 function runGame() {
+    startButton.remove();
     resetCanvas();
     drawCanvas();
     checkAppleCollision();
@@ -110,10 +117,10 @@ function moveSnake() {
 }
 
 function checkWallCollision(xCoord, yCoord) {
-    if (snakeBody[0].xCoord >= canvas.width || snakeBody[0].xCoord <= -15) {
+    if (snakeBody[0].xCoord >= canvas.width - 20 || snakeBody[0].xCoord <= 0) {
         endGame();
     }
-    if (snakeBody[0].yCoord >= canvas.height || snakeBody[0].yCoord <= -15) {
+    if (snakeBody[0].yCoord >= canvas.height - 20 || snakeBody[0].yCoord <= 0) {
         endGame();
     }
 }
@@ -159,7 +166,7 @@ function stopInterval() {
     clearInterval(gameInterval);
 }
 
-function endGame() {  
-    console.log('Game Over!');
+function endGame() { 
     stopInterval();
+    alert('Game Over!');
 }
